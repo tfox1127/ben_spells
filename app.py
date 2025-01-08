@@ -19,7 +19,22 @@ def practice():
     if request.method == 'POST':
         user_word = request.form['word']
         original_word = request.form['original_word']
-        result = user_word.replace("'", "").replace('’', "'").upper() == original_word.replace("'", "").replace('’', "'").upper()
+        
+        user_word = user_word.strip()
+        user_word = user_word.replace('’', "'")
+        user_word = user_word.replace('‘', "'")
+        user_word = user_word.replace('“', '"')
+        user_word = user_word.replace('”', '"') 
+        user_word = user_word.upper()
+
+        original_word = original_word.strip()
+        original_word = original_word.replace('’', "'")
+        original_word = original_word.replace('‘', "'")
+        original_word = original_word.replace('“', '"')
+        original_word = original_word.replace('”', '"') 
+        original_word = original_word.upper()
+
+        result = user_word == original_word
         
         if result:
             # Add the word to the list of practiced words
