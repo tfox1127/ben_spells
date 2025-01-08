@@ -7,7 +7,7 @@ app.secret_key = 'your_secret_key'  # Replace with a secure secret key
 
 # Sample list of words for practice
 words = ["can't", "don't", "wasn't", "doesn't", "didn't", "what's", "that's", "here's", "he's", "who's"]
-# words = ["can't"]
+words = ["test"]
 
 @app.route('/')
 def home():
