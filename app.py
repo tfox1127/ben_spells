@@ -19,11 +19,8 @@ def practice():
     if request.method == 'POST':
         user_word = request.form['word']
         original_word = request.form['original_word']
-        result = user_word.replace("'", "").upper() == original_word.replace("'", "").upper()
+        result = user_word.replace("'", "").replace('’', "'").upper() == original_word.replace("'", "").replace('’', "'").upper()
         
-        #remove all non alphanumeric characters from result
-        result = ''.join(e for e in result if e.isalnum())
-
         if result:
             # Add the word to the list of practiced words
             practiced_words = session.get('practiced_words', [])
