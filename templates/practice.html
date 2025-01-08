@@ -10,6 +10,9 @@
             //log the submitted word
             console.log('Submitted word:', event.target.word.value);
 
+            //creat a popup that shows what the user submitted
+            alert('Submitted word: ' + event.target.word.value);
+
             event.preventDefault();
             const form = event.target;
             const formData = new FormData(form);
