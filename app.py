@@ -7,7 +7,6 @@ app.secret_key = 'your_secret_key'  # Replace with a secure secret key
 
 # Sample list of words for practice
 words = ["can't", "don't", "wasn't", "doesn't", "didn't", "what's", "that's", "here's", "he's", "who's"]
-words = ["test"]
 
 @app.route('/')
 def home():
@@ -20,7 +19,7 @@ def practice():
     if request.method == 'POST':
         user_word = request.form['word']
         original_word = request.form['original_word']
-        result = user_word == original_word
+        result = user_word.replace("'", "").upper() == original_word.replace("'", "").upper()
 
         if result:
             # Add the word to the list of practiced words
