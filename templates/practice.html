@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spelling Practice</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script>
+        function submitForm(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            fetch('/practice', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.result) {
+                    showCustomAlert('Good job!', '{{ url_for("static", filename="images/happy/") }}' + data.image);
+                    if (data.done) {
+                        alert('All words practiced! Great job!');
+                        window.location.href = '/';
+                    } else {
+                        //waiting for 2 seconds before reloading the page
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2000);
+                    }
+                } else {
+                    // Show alert to try again with the same word and a random image from the sad folder
+                    showCustomAlert('Try again!', '{{ url_for("static", filename="images/sad/") }}' + data.image);
+                }
+            });
+        }
+
+        function showCustomAlert(message, imageUrl) {
+            const alertBox = document.createElement('div');
+            alertBox.style.position = 'fixed';
+            alertBox.style.left = '50%';
+            alertBox.style.top = '50%';
+            alertBox.style.transform = 'translate(-50%, -50%)';
+            alertBox.style.backgroundColor = '#fff';
+            alertBox.style.padding = '20px';
+            alertBox.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.1)';
+            alertBox.style.textAlign = 'center';
+            alertBox.style.zIndex = '1000';
+
+            const messageElem = document.createElement('p');
+            messageElem.textContent = message;
+            alertBox.appendChild(messageElem);
+
+            const imageElem = document.createElement('img');
+            imageElem.src = imageUrl;
+            imageElem.style.maxWidth = '100%';
+            alertBox.appendChild(imageElem);
+
+            const closeButton = document.createElement('button');
+            closeButton.textContent = 'Close';
+            closeButton.style.marginTop = '10px';
+            closeButton.onclick = () => {
+                document.body.removeChild(alertBox);
+            };
+            alertBox.appendChild(closeButton);
+
+            document.body.appendChild(alertBox);
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.getElementById('word').focus();
+        });
+    </script>
+</head>
+<body>
+    <h1>Spelling Practice</h1>
+    <p>Type the following word:</p>
+    <!-- <h2>{{ word.replace("'", "") }}</h2> -->
+    {% set word2 = word.replace("'", "") %}
+    <audio id="wordAudio" src="{{ url_for('static', filename='audio/' + word2 + '.m4a') }}"></audio>
+    <button onclick="document.getElementById('wordAudio').play()">Play Audio</button>
+    <!-- <button onclick="document.getElementById('wordAudio').pause()">Pause Audio</button> -->
+    <button onclick="document.getElementById('wordAudio').currentTime = 0; document.getElementById('wordAudio').play()">Restart Audio</button>
+    <form method="POST" onsubmit="submitForm(event)">
+        <input type="hidden" name="original_word" value="{{ word }}">
+        <label for="word">Your answer:</label>
+        <input type="text" name="word" id="word">
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

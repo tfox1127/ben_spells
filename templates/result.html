@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+</head>
+<body>
+    <h1>Result</h1>
+    <p>The word was: {{ original_word }}</p>
+    <audio id="wordAudio" src="{{ url_for('static', filename='audio/' + original_word + '.mp3') }}"></audio>
+    <button onclick="document.getElementById('wordAudio').play()">Play Audio</button>
+    <p>Your answer: {{ user_word }}</p>
+    <p>{{ 'Correct!' if result else 'Incorrect!' }}</p>
+    <a href="/practice">Try Another Word</a>
+</body>
+</html>

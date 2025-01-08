@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spelling Practice</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script>
+        function resetList() {
+            fetch('/reset')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('List has been reset!');
+                        window.location.href = '/';
+                    }
+                });
+        }
+    </script>
+</head>
+<body>
+    <h1>Welcome to Spelling Practice</h1>
+    <a href="/practice">Start Practice</a>
+    <button onclick="resetList()">Reset List</button>
+</body>
+</html>
