@@ -20,6 +20,9 @@ def practice():
         user_word = request.form['word']
         original_word = request.form['original_word']
         result = user_word.replace("'", "").upper() == original_word.replace("'", "").upper()
+        
+        #remove all non alphanumeric characters from result
+        result = ''.join(e for e in result if e.isalnum())
 
         if result:
             # Add the word to the list of practiced words
