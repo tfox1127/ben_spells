@@ -19,7 +19,8 @@ def practice():
     if request.method == 'POST':
         user_word = request.form['word']
         original_word = request.form['original_word']
-        
+        original_word_original = original_word
+
         user_word = user_word.strip()
         user_word = user_word.replace('’', "'")
         user_word = user_word.replace('‘', "'")
@@ -39,8 +40,8 @@ def practice():
         if result:
             # Add the word to the list of practiced words
             practiced_words = session.get('practiced_words', [])
-            if original_word not in practiced_words:
-                practiced_words.append(original_word)
+            if original_word_original not in practiced_words:
+                practiced_words.append(original_word_original)
             session['practiced_words'] = practiced_words
 
             #pic a random image from the /static/images/happy folder
