@@ -79,7 +79,7 @@
 </head>
 <body>
     <h1>Spelling Practice</h1>
-    <p>Type the following word:</p>
+    <p>Hit 'Play Audio' to hear the word and then type it in the box</p>
     <!-- <h2>{{ word.replace("'", "") }}</h2> -->
     {% set word2 = word.replace("'", "") %}
     <audio id="wordAudio" src="{{ url_for('static', filename='audio/' + word2 + '.m4a') }}"></audio>
@@ -92,5 +92,13 @@
         <input type="text" name="word" id="word">
         <button type="submit">Submit</button>
     </form>
+
+    <h2>Words completed:</h2>
+    <ol>
+        {% for practiced_word in session['practiced_words'] %}
+            <li>{{ practiced_word }}</li>
+        {% endfor %}
+    </ol>
+
 </body>
 </html>

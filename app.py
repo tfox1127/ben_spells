@@ -6,7 +6,8 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Replace with a secure secret key
 
 # Sample list of words for practice
-words = ["can't", "don't", "wasn't", "doesn't", "didn't", "what's", "that's", "here's", "he's", "who's"]
+#week01 words = ["can't", "don't", "wasn't", "doesn't", "didn't", "what's", "that's", "here's", "he's", "who's"]
+words = ["beach", "coast", "neat", "booth", "goat", "sheep", "tail", "wait", "scoop", "wheel"]
 
 @app.route('/')
 def home():
