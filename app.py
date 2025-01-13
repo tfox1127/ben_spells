@@ -20,10 +20,10 @@ def home():
 def practice():
     if request.method == 'POST':
         user_word = request.form['word']
-        print(user_word)
         original_word = request.form['original_word']
         original_word_original = original_word
-
+        print(f"session user_id: {session['user_id']} | original_word_original: {original_word_original} | user_word: {user_word} | original_word: {original_word}")
+              
         user_word = user_word.strip()
         user_word = user_word.replace('’', "'")
         user_word = user_word.replace('‘', "'")
