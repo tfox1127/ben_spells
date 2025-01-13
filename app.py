@@ -23,7 +23,11 @@ def practice():
         original_word = request.form['original_word']
         original_word_original = original_word
         print(f"session user_id: {session['user_id']} | original_word_original: {original_word_original} | user_word: {user_word} | original_word: {original_word}")
-              
+        
+        #wrtie the user_id, original_word_original, user_word, original_word to a file
+        with open('user_words.txt', 'a') as f:
+            f.write(f"{session['user_id']} | {original_word_original} | {user_word} | {original_word}\n")
+
         user_word = user_word.strip()
         user_word = user_word.replace('’', "'")
         user_word = user_word.replace('‘', "'")
