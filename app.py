@@ -11,6 +11,7 @@ words = ["beach", "coast", "neat", "booth", "goat", "sheep", "tail", "wait", "sc
 
 @app.route('/')
 def home():
+    session['user_id'] = random.randint(1000, 9999)
     session['practiced_words'] = []
     session['current_word'] = None
     return render_template('index.html')
@@ -19,6 +20,7 @@ def home():
 def practice():
     if request.method == 'POST':
         user_word = request.form['word']
+        print(user_word)
         original_word = request.form['original_word']
         original_word_original = original_word
 
@@ -75,6 +77,10 @@ def practice():
 def reset():
     session['practiced_words'] = []
     session['current_word'] = None
+
+    #create a session variable to id the user 
+    session['user_id'] = random.randint(1000, 9999)
+
     return jsonify(success=True)
 
 if __name__ == '__main__':
