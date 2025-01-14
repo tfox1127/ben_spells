@@ -1,9 +1,17 @@
-import os
+import os, random
+import datetime as dt
 from flask import Flask, render_template, request, jsonify, session
-import random
+from sqlalchemy import create_engine, text
+from sqlalchemy.orm import scoped_session, sessionmaker
+
+DATABASE_URL = os.environ['DATABASE_URL']
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Replace with a secure secret key
+engine = create_engine(DATABASE_URL, isolation_level="AUTOCOMMIT")
+db = scoped_session(sessionmaker(bind=engine))
+
+# app.secret_key = 'your_secret_key'  # Replace with a secure secret key
+app.secret_key = os.environ['pizza']
 
 # Sample list of words for practice
 #week01 words = ["can't", "don't", "wasn't", "doesn't", "didn't", "what's", "that's", "here's", "he's", "who's"]
@@ -14,6 +22,7 @@ def home():
     session['user_id'] = random.randint(1000, 9999)
     session['practiced_words'] = []
     session['current_word'] = None
+    session['answers'] = []
     return render_template('index.html')
 
 @app.route('/practice', methods=['GET', 'POST'])
@@ -22,11 +31,13 @@ def practice():
         user_word = request.form['word']
         original_word = request.form['original_word']
         original_word_original = original_word
-        print(f"session user_id: {session['user_id']} | original_word_original: {original_word_original} | user_word: {user_word} | original_word: {original_word}")
-        
-        #wrtie the user_id, original_word_original, user_word, original_word to a file
-        with open('user_words.txt', 'a') as f:
-            f.write(f"{session['user_id']} | {original_word_original} | {user_word} | {original_word}\n")
+
+        db.execute(text(
+            f"""
+                INSERT INTO ben_spells_logs (user_id, original_word_original, user_word, original_word, ts)
+                VALUES ({session['user_id']}, '{original_word_original}', '{user_word}', '{original_word}', '{dt.datetime.now()}');
+            """))
+        db.commit()
 
         user_word = user_word.strip()
         user_word = user_word.replace('’', "'")
@@ -81,10 +92,9 @@ def practice():
 def reset():
     session['practiced_words'] = []
     session['current_word'] = None
-
-    #create a session variable to id the user 
+    session['answers'] = []
     session['user_id'] = random.randint(1000, 9999)
-
+    
     return jsonify(success=True)
 
 if __name__ == '__main__':
