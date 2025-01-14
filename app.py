@@ -1,16 +1,12 @@
 import os, random
-from typing_extensions import Self
 import datetime as dt
 from flask import Flask, render_template, request, jsonify, session
-from werkzeug.exceptions import HTTPException
-from sqlalchemy import create_engine, text
-from sqlalchemy.orm import scoped_session, sessionmaker
 
 DATABASE_URL = os.environ['DATABASE_URL']
 
 app = Flask(__name__)
-engine = create_engine(DATABASE_URL, isolation_level="AUTOCOMMIT")
-db = scoped_session(sessionmaker(bind=engine))
+# engine = create_engine(DATABASE_URL, isolation_level="AUTOCOMMIT")
+# db = scoped_session(sessionmaker(bind=engine))
 
 # app.secret_key = 'your_secret_key'  # Replace with a secure secret key
 app.secret_key = os.environ['pizza']
@@ -34,12 +30,12 @@ def practice():
         original_word = request.form['original_word']
         original_word_original = original_word
 
-        db.execute(text(
-            f"""
-                INSERT INTO ben_spells_logs (user_id, original_word_original, user_word, original_word, ts)
-                VALUES ({session['user_id']}, '{original_word_original}', '{user_word}', '{original_word}', '{dt.datetime.now()}');
-            """))
-        db.commit()
+        # db.execute(text(
+        #     f"""
+        #         INSERT INTO ben_spells_logs (user_id, original_word_original, user_word, original_word, ts)
+        #         VALUES ({session['user_id']}, '{original_word_original}', '{user_word}', '{original_word}', '{dt.datetime.now()}');
+        #     """))
+        # db.commit()
 
         user_word = user_word.strip()
         user_word = user_word.replace('’', "'")
