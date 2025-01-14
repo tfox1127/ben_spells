@@ -1,6 +1,8 @@
 import os, random
+from typing_extensions import Self
 import datetime as dt
 from flask import Flask, render_template, request, jsonify, session
+from werkzeug.exceptions import HTTPException
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import scoped_session, sessionmaker
 
