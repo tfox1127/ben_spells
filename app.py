@@ -1,8 +1,7 @@
 import os, random
 import datetime as dt
 from flask import Flask, render_template, request, jsonify, session
-
-from sqlalchemy import create_engine, text
+from sqlalchemy import *
 from sqlalchemy.orm import sessionmaker, scoped_session
 
 try: 
