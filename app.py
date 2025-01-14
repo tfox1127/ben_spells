@@ -1,13 +1,15 @@
 import os, random
 import datetime as dt
 from flask import Flask, render_template, request, jsonify, session
+from sqlalchemy import create_engine, text
+from sqlalchemy.orm import scoped_session, sessionmaker
 
 DATABASE_URL = os.environ['ATTACHED_DB_URL']
 DATABASE_URL = DATABASE_URL.replace("s://", "sql://", 1)
 
 app = Flask(__name__)
-# engine = create_engine(DATABASE_URL, isolation_level="AUTOCOMMIT")
-# db = scoped_session(sessionmaker(bind=engine))
+engine = create_engine(DATABASE_URL, isolation_level="AUTOCOMMIT")
+db = scoped_session(sessionmaker(bind=engine))
 
 # app.secret_key = 'your_secret_key'  # Replace with a secure secret key
 app.secret_key = os.environ['pizza']
