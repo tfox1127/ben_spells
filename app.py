@@ -2,7 +2,8 @@ import os, random
 import datetime as dt
 from flask import Flask, render_template, request, jsonify, session
 
-DATABASE_URL = os.environ['DATABASE_URL']
+DATABASE_URL = os.environ['ATTACHED_DB_URL']
+DATABASE_URL = DATABASE_URL.replace("s://", "sql://", 1)
 
 app = Flask(__name__)
 # engine = create_engine(DATABASE_URL, isolation_level="AUTOCOMMIT")
