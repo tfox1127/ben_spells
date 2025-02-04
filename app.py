@@ -20,7 +20,9 @@ app.secret_key = os.environ['pizza']
 
 # Sample list of words for practice
 #week01 words = ["can't", "don't", "wasn't", "doesn't", "didn't", "what's", "that's", "here's", "he's", "who's"]
-words = ["beach", "coast", "neat", "booth", "goat", "sheep", "tail", "wait", "scoop", "wheel"]
+#week02 words = ["beach", "coast", "neat", "booth", "goat", "sheep", "tail", "wait", "scoop", "wheel"]
+#week03 
+words = ['plain', 'tail', 'sail', 'waist', 'maid', 'plane', 'tale', 'sale', 'waste', 'made'] 
 
 @app.route('/')
 def home():
