@@ -80,7 +80,7 @@
 <body>
     <h1>Spelling Practice</h1>
     <p>Hit 'Play Audio' to hear the word and then type it in the box</p>
-    <h2>{{ word.replace("'", "") }}</h2>
+    <!-- <h2>{{ word.replace("'", "") }}</h2> -->
     {% set word2 = word.replace("'", "") %}
     <audio id="wordAudio" src="{{ url_for('static', filename='audio/' + word2 + '.m4a') }}"></audio>
     <button onclick="document.getElementById('wordAudio').play()">Play Audio</button>
